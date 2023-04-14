@@ -1,0 +1,52 @@
+<nav class="navbar navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">HiMeet</a>
+    <button class="navbar-toggler" type="button"
+    data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false"
+    aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+          <a class="nav-link active" aria-current="page"
+          href="{% url 'profile_list' %}">Lista de Perfis
+        </a>
+      </ul>
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav">
+          <a class="nav-link active" aria-current="page"
+          href="{% url 'profile' request.user.id %}">
+          Eu/@{{ profile.user.username}}/
+        </a>
+      </ul>
+      {% if request.user.id == profile.user.id %}
+      <ul class="navbar-nav">
+          <a class="nav-link active" aria-current="page"
+          href="{% url 'update_user' %}">
+          Actualizar Perfil
+        </a>
+      </ul>
+      {% endif %}
+      <ul class="navbar-nav">
+          <a class="nav-link active" aria-current="page"
+          href="{% url 'logout' %}">
+          Sair
+        </a>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav">
+          <a class="nav-link active" aria-current="page"
+          href="{% url 'register' %}">
+          Registo
+        </a>
+      <ul class="navbar-nav">
+          <a class="nav-link active" aria-current="page"
+          href="{% url 'login' %}">
+          Login
+        </a>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col-8">
+<h1>HiMeets!</h1>
+<br/>
+{% for meet in meets %}
+<div class="card w-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-1">
+        {% if meet.user.profile.profile_image %}
+        <img src="{{ meet.user.profile.profile_image.url }}"
+        width="50" height="50" class="rounded-circle"
+        alt="{{ profile.user.username }}">
+        {% else %}
+        <img src="{% static 'images/default_profile_pic.png' %}"
+        width="50" height="50" class="rounded-circle"
+        alt="{{ profile.user.username }}">
+        {% endif %}
+        </div>
+        <div class="col-11">
+  <div class="card-body">
+    <h5 class="card-title">meet</h5>
+    <p class="card-text">{{ meet.body }}<br/>
+    <small class="text-muted">
+    ({{ meet.create_at }})  @{{ meet.user.username}}
+    - {{ meet.number_of_likes }} Meets -{{ user }}
+       {% if user in meet.likes.all %}
+    <a href="{% url 'meet_like' meet.id %}">Unmeet</a>
+    {% else %}
+    <a href="{% url 'meet_like' meet.id %}">Meet</a>
+    {% endif %}
+  </small></p>
+  </div>
+</div><br/><br/>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+<div class="col-4">
+  <br/><br/><br/>
+  {% if form %}
+  <form method=POST>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Meet</button>
+  </form>
+  {% endif %}
+  </div>
+{% endblock %}
